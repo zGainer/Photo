@@ -22,7 +22,7 @@ extension PhotoModel {
         
         DataManager.fetchData(from: url) { data in
             DataManager.decode(PhotoData.self, from: data) { photoData in
-                
+
                 let photos = photoData.photos.map { PhotoModel(width: $0.width,
                                                                height: $0.height,
                                                                url: $0.url,
@@ -30,7 +30,7 @@ extension PhotoModel {
                                                                caption: $0.alt,
                                                                previewUrl: $0.src.large,
                                                                originalUrl: $0.src.original) }
-                
+
                 completion(photos)
             }
         }

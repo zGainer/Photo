@@ -14,12 +14,25 @@ final class PhotoViewController: UIViewController {
     let photographer = UILabel()
     let caption = UILabel()
     
-    var model: PhotoModel?
+    var presenter: PhotoPresenter!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         setupUI()
+    }
+}
+
+// MARK: - Photo View Protocol
+
+extension PhotoViewController: PhotoViewProtocol {
+
+    func showPhoto(photoData: Data) {
+        photo.image = UIImage(data: photoData)
+    }
+
+    func failure(error: Error) {
+        print(error)
     }
 }
 
@@ -42,34 +55,23 @@ private extension PhotoViewController {
 private extension PhotoViewController {
     
     func addViews() {
-        
+
         view.addSubview(photo)
         view.addSubview(photographer)
         view.addSubview(caption)
     }
     
     func configure() {
-        
-        guard let model else { return }
-        
+
         view.backgroundColor = .white
         
         photo.contentMode = .scaleAspectFill
-        
-        photographer.text = model.photographer
-        caption.text = model.caption
-        
+
         caption.numberOfLines = 0
         caption.lineBreakMode = .byWordWrapping
         
-        NetworkManager.shared.fetchImage(url: model.originalUrl) { [unowned self] result in
-            switch result {
-            case .success(let data):
-                photo.image = UIImage(data: data)
-            case .failure(let error):
-                print(error)
-            }
-        }
+        photographer.text = presenter.model.photographer
+        caption.text = presenter.model.caption
     }
 }
 
@@ -79,11 +81,7 @@ private extension PhotoViewController {
     
     func layout() {
         
-        var ratio: CGFloat = 1
-        
-        if let model {
-            ratio = CGFloat(model.height) / CGFloat(model.width)
-        }
+        let ratio = CGFloat(presenter.model.height) / CGFloat(presenter.model.width)
         
         [photo, photographer, caption].forEach {
             $0.translatesAutoresizingMaskIntoConstraints = false

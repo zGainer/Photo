@@ -17,14 +17,7 @@ final class GalleryViewController: UIViewController {
     
     private let reuseIdentifier = "PhotoCell"
     
-    private var collections: [CollectionsModel] = []
-    
-    private var photos: [photoSet] = []
-    
-    private struct photoSet {
-        let model: PhotoModel
-        var photo: UIImage?
-    }
+    private var presenter: GalleryPresenter!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -38,15 +31,17 @@ final class GalleryViewController: UIViewController {
 extension GalleryViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        photos.count
+        presenter.photos.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as? PhotoCell else { fatalError("Error cast PhotoCell") }
         
-        cell.photo.image = photos[indexPath.row].photo
-        cell.photographer.text = photos[indexPath.row].model.photographer
+        let photo = UIImage(data: presenter.photos[indexPath.row].photoData)
+        
+        cell.photo.image = photo
+        cell.photographer.text = presenter.photos[indexPath.row].model.photographer
         
         return cell
     }
@@ -58,9 +53,11 @@ extension GalleryViewController: UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
+        let model = presenter.photos[indexPath.row].model
+        
         let photoVC = PhotoViewController()
         
-        photoVC.model = photos[indexPath.row].model
+        photoVC.presenter = PhotoPresenter(view: photoVC, model: model)
         
         navigationController?.pushViewController(photoVC, animated: true)
     }
@@ -78,66 +75,33 @@ extension GalleryViewController: UICollectionViewDelegateFlowLayout {
     }
 }
 
-// MARK: - Common
+// MARK: - Gallery View Protocol
 
-private extension GalleryViewController {
+extension GalleryViewController: GalleryViewProtocol {
     
     func fetchPhotos() {
         
+        presenter.photos.removeAll()
+        
         if segmentedControl.selectedSegmentIndex == 1 {
-            guard let model = collections.randomElement() else { fatalError("No collection id") }
-            
-            segmentedControl.setTitle(model.title, forSegmentAt: 1)
-            
-            let link = Setting.Links.collectionPhotos.getLink(with: model.id)
-            
-            PhotoModel.fetchMedia(from: link) { [unowned self] photos in
-                fetchImages(from: photos)
-            }
+            presenter.fetchMedia()
         } else {
-            segmentedControl.setTitle("Random", forSegmentAt: 1)
-            
-            let link = Setting.Links.curated.rawValue
-            
-            PhotoModel.fetchPhotos(from: link) { [unowned self] photos in
-                fetchImages(from: photos)
-            }
+            presenter.fetchPhotos()
         }
     }
     
-    func fetchImages(from models: [PhotoModel]) {
+    func setSegmentedControlTitle(_ title: String) {
         
-        photos.removeAll()
-        
-        for model in models {
-            NetworkManager.shared.fetchImage(url: model.previewUrl) { [unowned self] result in
-                switch result {
-                case .success(let data):
-                    showPhoto(for: model, from: data)
-                case .failure(let error):
-                    print(error)
-                }
-            }
-        }
+        segmentedControl.setTitle(title, forSegmentAt: 1)
     }
     
-    func showPhoto(for model: PhotoModel, from data: Data) {
-        
-        let image = UIImage(data: data)
-        
-        photos.append(photoSet(model: model,
-                               photo: image))
+    func showPhoto() {
         
         gallery.reloadData()
     }
     
-    func fetchCollections () {
-        
-        let link = Setting.Links.collections.rawValue
-        
-        CollectionsModel.fetchCollections(from: link) { [unowned self] fetchedCollections in
-            collections = fetchedCollections
-        }
+    func failure(error: Error) {
+        print(error)
     }
 }
 
@@ -180,6 +144,8 @@ private extension GalleryViewController {
     
     func configure() {
 
+        presenter = GalleryPresenter(view: self)
+        
         gallery.delegate = self
         gallery.dataSource = self
 
@@ -195,7 +161,6 @@ private extension GalleryViewController {
         
         segmentedControl.selectedSegmentIndex = 0
         
-        fetchCollections()
         fetchPhotos()
     }
 }

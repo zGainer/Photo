@@ -20,7 +20,7 @@ struct DataManager {
             }
         }
     }
-  
+    
     static func decode<T: Decodable>(_ type: T.Type, from data: Data, completion: (T) -> Void) {
 
         DecodeManager.shared.decode(T.self, from: data) { result in

@@ -11,8 +11,10 @@
 		44438A522A627ED30054F6C9 /* CollectionsData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44438A512A627ED30054F6C9 /* CollectionsData.swift */; };
 		44438A542A62961D0054F6C9 /* CollectionsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44438A532A62961D0054F6C9 /* CollectionsModel.swift */; };
 		4451D15C2A4C1C66008FEA91 /* PhotoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4451D15B2A4C1C66008FEA91 /* PhotoViewController.swift */; };
+		446B1CBE2AB025BD0026DC3C /* PhotoPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 446B1CBD2AB025BD0026DC3C /* PhotoPresenter.swift */; };
 		447CB59B2A370DF7005A0146 /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 447CB59A2A370DF7005A0146 /* DataManager.swift */; };
 		449629442A7B6F9B00470EF1 /* MediaData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 449629432A7B6F9B00470EF1 /* MediaData.swift */; };
+		44B234BC2AB18A6200C418C4 /* GalleryPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44B234BB2AB18A6200C418C4 /* GalleryPresenter.swift */; };
 		44F8803C2A34421F00D0CD73 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44F8803B2A34421F00D0CD73 /* AppDelegate.swift */; };
 		44F8803E2A34421F00D0CD73 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44F8803D2A34421F00D0CD73 /* SceneDelegate.swift */; };
 		44F880402A34421F00D0CD73 /* GalleryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44F8803F2A34421F00D0CD73 /* GalleryViewController.swift */; };
@@ -31,8 +33,10 @@
 		44438A512A627ED30054F6C9 /* CollectionsData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionsData.swift; sourceTree = "<group>"; };
 		44438A532A62961D0054F6C9 /* CollectionsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionsModel.swift; sourceTree = "<group>"; };
 		4451D15B2A4C1C66008FEA91 /* PhotoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoViewController.swift; sourceTree = "<group>"; };
+		446B1CBD2AB025BD0026DC3C /* PhotoPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoPresenter.swift; sourceTree = "<group>"; };
 		447CB59A2A370DF7005A0146 /* DataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
 		449629432A7B6F9B00470EF1 /* MediaData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaData.swift; sourceTree = "<group>"; };
+		44B234BB2AB18A6200C418C4 /* GalleryPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GalleryPresenter.swift; sourceTree = "<group>"; };
 		44F880382A34421F00D0CD73 /* Photo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Photo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		44F8803B2A34421F00D0CD73 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		44F8803D2A34421F00D0CD73 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -101,6 +105,8 @@
 				449629462A7B90A200470EF1 /* Storyboards */,
 				44F880502A3442D700D0CD73 /* ViewControllers */,
 				44FE66A52A384DE5002C3AAF /* Views */,
+				446B1CBD2AB025BD0026DC3C /* PhotoPresenter.swift */,
+				44B234BB2AB18A6200C418C4 /* GalleryPresenter.swift */,
 			);
 			path = Photo;
 			sourceTree = "<group>";
@@ -227,10 +233,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				44F880582A34513600D0CD73 /* PhotoModel.swift in Sources */,
+				446B1CBE2AB025BD0026DC3C /* PhotoPresenter.swift in Sources */,
 				449629442A7B6F9B00470EF1 /* MediaData.swift in Sources */,
 				44F880402A34421F00D0CD73 /* GalleryViewController.swift in Sources */,
 				44F8803C2A34421F00D0CD73 /* AppDelegate.swift in Sources */,
 				44F8805A2A34558C00D0CD73 /* PhotoData.swift in Sources */,
+				44B234BC2AB18A6200C418C4 /* GalleryPresenter.swift in Sources */,
 				44F880552A3448CD00D0CD73 /* NetworkManager.swift in Sources */,
 				44438A542A62961D0054F6C9 /* CollectionsModel.swift in Sources */,
 				4451D15C2A4C1C66008FEA91 /* PhotoViewController.swift in Sources */,
